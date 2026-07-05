@@ -18,7 +18,7 @@ import {ActivatedRoute} from '@angular/router';
 import {LoginSpec} from '@api/root.api';
 import {KdError} from '@api/root.shared';
 import {IConfig, StateError} from '@api/root.ui';
-import {AsKdError} from '@common/errors/errors';
+import {AsKdError, KdError as KdErrorImpl} from '@common/errors/errors';
 import {AuthService} from '@common/services/global/authentication';
 import {HistoryService} from '@common/services/global/history';
 import {map} from 'rxjs/operators';
@@ -46,6 +46,23 @@ export class LoginComponent implements OnInit {
         this.errors = [state.error];
       }
     });
+
+    const params = this.route_.snapshot.queryParamMap;
+    const ssoToken = params.get('ssoToken');
+    const ssoError = params.get('ssoError');
+
+    if (ssoToken) {
+      this.authService_.completeSsoLogin(ssoToken).subscribe({
+        next: () => this.ngZone_.run(() => this.historyService_.goToPreviousState('workloads')),
+        error: (err: HttpErrorResponse) => (this.errors = [AsKdError(err)]),
+      });
+    } else if (ssoError) {
+      this.errors = [new KdErrorImpl('SSO login failed', 0, ssoError)];
+    }
+  }
+
+  loginWithSso(): void {
+    window.location.href = 'api/v1/oidc/login';
   }
 
   login(): void {

@@ -45,6 +45,7 @@ func main() {
 		client.WithMasterUrl(args.ApiServerHost()),
 		client.WithInsecureTLSSkipVerify(args.ApiServerSkipTLSVerify()),
 		client.WithCaBundle(args.ApiServerCaBundle()),
+		client.WithSessionSigningKey(args.SessionSigningKey()),
 	)
 
 	if !args.IsProxyEnabled() {

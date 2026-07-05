@@ -1597,7 +1597,7 @@
         <source>You can generate token for service account with: </source>
       </trans-unit>
       <trans-unit id="5911975001974379688" datatype="html">
-        <source> To find out more on how to configure and use bearer tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#20\uFFFD&quot;"/>documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#20\uFFFD&quot;"/>. </source>
+        <source> To find out more on how to configure and use bearer tokens, please refer to the <x id="START_LINK" ctype="x-a" equiv-text="&quot;\uFFFD#23\uFFFD&quot;"/>documentation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&quot;\uFFFD/#23\uFFFD&quot;"/>. </source>
       </trans-unit>
       <trans-unit id="1089159169028543625" datatype="html">
         <source> Config and Storage </source>
@@ -1966,6 +1966,9 @@
       </trans-unit>
       <trans-unit id="8967487471439603323" datatype="html">
         <source>Hides all-namespaces option from the namespaces dropdown list in UI.</source>
+      </trans-unit>
+      <trans-unit id="512261711502076281" datatype="html">
+        <source> Sign in with SSO </source>
       </trans-unit>
     </body>
   </file>

@@ -1,17 +1,60 @@
-# Kubernetes Dashboard
+```
+ _          _                          _                        _
+| | ___   _| |__   ___ _ __ _ __   ___| |_ ___  ___       _   _(_)
+| |/ / | | | '_ \ / _ \ '__| '_ \ / _ \ __/ _ \/ __|_____| | | | |
+|   <| |_| | |_) |  __/ |  | | | |  __/ ||  __/\__ \_____| |_| | |
+|_|\_\\__,_|_.__/ \___|_|  |_| |_|\___|\__\___||___/      \__,_|_|
+```
+
+# kubernetes-ui
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
 [![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kubernetes/dashboard/blob/master/LICENSE)
 
-## IMPORTANT
+## 🚀 Relaunching as a new open source project
 
-**This project is now archived and no longer maintained due to lack of active maintainers and contributors.**
+`kubernetes-ui` (`techcto/kubernetes-ui`) picks up where `kubernetes/dashboard` left off, as its own
+actively-developed project — and we're already moving fast. Huge thanks to everyone who built and
+maintained the original project over the years; this fork exists because of the solid foundation
+they left behind. **We're looking for developers who want to help take it to the next level** — open
+an issue or PR if you'd like to get involved.
 
-Thank you to everyone who used, starred, or contributed to this project! Feel free to fork this repository if you want to continue development yourself.
+### What's new in this fork
 
-Please consider using **[Headlamp](https://github.com/kubernetes-sigs/headlamp)** instead. It was recently moved under the sig-ui. From the creators:
-> Headlamp is an easy-to-use and extensible Kubernetes web UI.
+#### 🔐 SSO login for Keycloak
+
+We added full **SSO login support for Keycloak** (`modules/auth/pkg/routes/oidc`) — a complete OIDC
+Authorization Code flow with PKCE. Upstream never shipped this: it only ever had bare bearer-token
+login (`modules/auth/api/v1/login.go`), and login itself was tracked as a `priority/critical-urgent`
+issue ([#2353](https://github.com/kubernetes/dashboard/issues/2353)) that was still open when the
+project was archived.
+
+On successful login:
+- The user's Keycloak client role (`view` / `edit` / `admin`) is extracted straight from the ID
+  token's `resource_access` claim.
+- That role maps 1:1 onto Kubernetes' own built-in `view` / `edit` / `admin` ClusterRoles — no
+  custom RBAC to maintain.
+- A signed session token is issued for the frontend to use going forward.
+
+**Configuration** (see `pkg/args/args.go`):
+
+| Flag | Purpose |
+|---|---|
+| `--oidc-issuer-url` | Keycloak realm issuer URL |
+| `--oidc-client-id` / `--oidc-client-secret` | Keycloak client credentials |
+| `--oidc-redirect-url` | Registered callback URL |
+| `--oidc-scopes` | Space-separated OIDC scopes to request |
+| `--session-signing-key` | Key used to sign the post-login session token |
+
+**Still to wire up end-to-end**: `modules/api` currently treats its incoming `Authorization` header
+as a raw Kubernetes bearer token. It needs to decode this module's session token instead, and make
+the actual API calls via the cluster's `dashboard-api` ServiceAccount (see
+`charts/network/templates/admin-role.yaml` in the `aws-kubernetes` repo), using
+`Impersonate-User` / `Impersonate-Group` headers set from the session's username/role — Kubernetes'
+own native mechanism for "authenticate via an external IdP, then act as that user for RBAC purposes,"
+since EKS's managed control plane won't trust an arbitrary external OIDC provider directly. The
+`web` frontend also needs to start sending the session token it gets back.
 
 ## Introduction
 

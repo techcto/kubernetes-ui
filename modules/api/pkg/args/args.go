@@ -75,6 +75,11 @@ var (
 	argKubeConfigFile            = pflag.String("kubeconfig", "", "path to kubeconfig file with control plane location information")
 	argNamespace                 = pflag.String("namespace", helpers.GetEnv("POD_NAMESPACE", "kubernetes-dashboard"), "Namespace to use when accessing Dashboard specific resources, i.e. metrics scraper service")
 	argMetricsScraperServiceName = pflag.String("metrics-scraper-service-name", "kubernetes-dashboard-metrics-scraper", "name of the dashboard metrics scraper service")
+
+	// Must match the same flag/value on modules/auth - it verifies the SSO
+	// session tokens that service issues (see k8s.io/dashboard/client's
+	// SignSession/configFromRequest).
+	argSessionSigningKey = pflag.String("session-signing-key", "", "key used to verify SSO session tokens issued by modules/auth")
 )
 
 func init() {
@@ -186,4 +191,8 @@ func IsProxyEnabled() bool {
 
 func IsOpenAPIEnabled() bool {
 	return *argOpenAPIEnabled
+}
+
+func SessionSigningKey() string {
+	return *argSessionSigningKey
 }

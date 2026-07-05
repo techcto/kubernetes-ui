@@ -31,6 +31,22 @@ limitations under the License.
       Kubernetes Dashboard
     </div>
     <div content>
+      <div
+        fxLayout="column"
+        class="kd-login-mode-description"
+      >
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          class="kd-login-button"
+          (click)="loginWithSso()"
+          i18n
+        >
+          Sign in with SSO
+        </button>
+      </div>
+
       <form
         fxLayout="column"
         (ngSubmit)="login()"

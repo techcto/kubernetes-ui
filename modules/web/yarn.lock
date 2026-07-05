@@ -6565,35 +6565,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swimlane/ngx-charts@npm:21.1.3":
-  version: 21.1.3
-  resolution: "@swimlane/ngx-charts@npm:21.1.3"
+"@swimlane/ngx-charts@npm:20.5.0":
+  version: 20.5.0
+  resolution: "@swimlane/ngx-charts@npm:20.5.0"
   dependencies:
-    d3-array: ^3.2.0
+    d3-array: ^3.1.1
     d3-brush: ^3.0.0
     d3-color: ^3.1.0
     d3-ease: ^3.0.1
     d3-format: ^3.1.0
-    d3-hierarchy: ^3.1.2
+    d3-hierarchy: ^3.1.0
     d3-interpolate: ^3.0.1
     d3-sankey: ^0.12.3
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
     d3-shape: ^3.2.0
-    d3-time-format: ^4.1.0
+    d3-time-format: ^3.0.0
     d3-transition: ^3.0.1
-    gradient-path: ^2.3.0
-    tslib: ^2.3.1
+    rfdc: ^1.3.0
+    tslib: ^2.0.0
   peerDependencies:
-    "@angular/animations": 17.x || 18.x
-    "@angular/cdk": 17.x || 18.x
-    "@angular/common": 17.x || 18.x
-    "@angular/core": 17.x || 18.x
-    "@angular/forms": 17.x || 18.x
-    "@angular/platform-browser": 17.x || 18.x
-    "@angular/platform-browser-dynamic": 17.x || 18.x
-    rxjs: 7.x
-  checksum: 96edfffd3bc01de65c2d142d2ed23c2695784630cb38cad799ded10777fe37b248ec97e2ab06c8f47e62e9bd7d4927e1235c230fe92544bd60c4cda961a9b787
+    "@angular/animations": ">=12.0.0"
+    "@angular/cdk": ">=12.0.0"
+    "@angular/common": ">=12.0.0"
+    "@angular/core": ">=12.0.0"
+    "@angular/forms": ">=12.0.0"
+    "@angular/platform-browser": ">=12.0.0"
+    "@angular/platform-browser-dynamic": ">=12.0.0"
+    rxjs: ^6.5.3 || ^7.4.0
+  checksum: 4b124e528f9fefa77bb6edac612cc40c64ec401ee547881f561279e92010d6c623e0f0f8d488ae862acf7bccf4116645ea374a42dc7a9ffa125c712d58ec9701
   languageName: node
   linkType: hard
 
@@ -7388,13 +7388,6 @@ __metadata:
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
   checksum: 72576cc1522090fe497337c2b99d9838e320659ac57fa5560fcbdcbafcf5d0216c6b3a0a8a4ee4fdb3b1f5e3420aa4f6223ab57b82fef3578bec3206425c6cf5
-  languageName: node
-  linkType: hard
-
-"@types/tinycolor2@npm:^1.4.0":
-  version: 1.4.6
-  resolution: "@types/tinycolor2@npm:1.4.6"
-  checksum: 50179851b32dcf78e0b4b691350a61043d8a00c3a8176d8155a257b34bb937136ff5d7950c814dca3c832673c7b6dc835f89dd154e85ccec3a4d4eac3993ed84
   languageName: node
   linkType: hard
 
@@ -10269,7 +10262,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-array@npm:1 - 2":
+"d3-array@npm:1 - 2, d3-array@npm:2":
   version: 2.12.1
   resolution: "d3-array@npm:2.12.1"
   dependencies:
@@ -10278,7 +10271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:^3.2.0":
+"d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:^3.1.1":
   version: 3.2.4
   resolution: "d3-array@npm:3.2.4"
   dependencies:
@@ -10338,7 +10331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-hierarchy@npm:^3.1.2":
+"d3-hierarchy@npm:^3.1.0":
   version: 3.1.2
   resolution: "d3-hierarchy@npm:3.1.2"
   checksum: 0fd946a8c5fd4686d43d3e11bbfc2037a145fda29d2261ccd0e36f70b66af6d7638e2c0c7112124d63fc3d3127197a00a6aecf676bd5bd392a94d7235a214263
@@ -10416,12 +10409,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-time-format@npm:2 - 4, d3-time-format@npm:4.1.0, d3-time-format@npm:^4.1.0":
+"d3-time-format@npm:2 - 4, d3-time-format@npm:4.1.0":
   version: 4.1.0
   resolution: "d3-time-format@npm:4.1.0"
   dependencies:
     d3-time: 1 - 3
   checksum: 7342bce28355378152bbd4db4e275405439cabba082d9cd01946d40581140481c8328456d91740b0fe513c51ec4a467f4471ffa390c7e0e30ea30e9ec98fcdf4
+  languageName: node
+  linkType: hard
+
+"d3-time-format@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "d3-time-format@npm:3.0.0"
+  dependencies:
+    d3-time: 1 - 2
+  checksum: c20c1667dbea653f81d923e741f84c23e4b966002ba0d6ed94cbc70692105566e55e89d18d175404534a879383fd1123300bd12885a3c924fe924032bb0060db
+  languageName: node
+  linkType: hard
+
+"d3-time@npm:1 - 2":
+  version: 2.1.1
+  resolution: "d3-time@npm:2.1.1"
+  dependencies:
+    d3-array: 2
+  checksum: d1c7b9658c20646e46c3dd19e11c38e02dec098e8baa7d2cd868af8eb01953668f5da499fa33dc63541cf74a26e788786f8828c4381dbbf475a76b95972979a6
   languageName: node
   linkType: hard
 
@@ -12929,15 +12940,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gradient-path@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "gradient-path@npm:2.3.0"
-  dependencies:
-    tinygradient: ^1.0.0
-  checksum: 983568e5e7a2f156f99feb06185550f66e15703201c6ad29e04b3140cf860e31924361ec5d81df4b0f900d9dfd22a18f01bf2f06fbbb6477f87ba597f6ef0507
-  languageName: node
-  linkType: hard
-
 "graphemer@npm:^1.4.0":
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
@@ -15168,7 +15170,7 @@ __metadata:
     "@graphql-mesh/openapi": 0.109.2
     "@graphql-mesh/runtime": 0.106.6
     "@graphql-mesh/transform-replace-field": 0.105.4
-    "@swimlane/ngx-charts": 21.1.3
+    "@swimlane/ngx-charts": 20.5.0
     "@types/d3": 7.4.3
     "@types/d3-scale": 4.0.9
     "@types/file-saver": 2.0.7
@@ -15213,7 +15215,7 @@ __metadata:
     minimatch: 10.0.1
     minimist: 1.2.8
     ng-extract-i18n-merge: 2.14.3
-    ngx-cookie-service: 19.1.2
+    ngx-cookie-service: 16.1.0
     ngx-pipes: 3.2.2
     node-gyp: 11.2.0
     normalize.css: 8.0.1
@@ -15223,7 +15225,6 @@ __metadata:
     roboto-fontface: 0.10.0
     run-node: 2.0.0
     rxjs: 7.8.2
-    rxjs-compat: 6.6.7
     sass: 1.90.0
     sass-loader: 16.0.5
     semver: 7.7.1
@@ -16414,15 +16415,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ngx-cookie-service@npm:19.1.2":
-  version: 19.1.2
-  resolution: "ngx-cookie-service@npm:19.1.2"
+"ngx-cookie-service@npm:16.1.0":
+  version: 16.1.0
+  resolution: "ngx-cookie-service@npm:16.1.0"
   dependencies:
-    tslib: ^2.8.0
+    tslib: ^2.0.0
   peerDependencies:
-    "@angular/common": ^19.0.0
-    "@angular/core": ^19.0.0
-  checksum: 75bc5bf9d3e514fa9a844bd7b24a28f14c397028030d5d7a4ed2881c3bff043b3dbcdb1a3720da12bd052444ba32faa85f1a2b7de9610b6beedefd26bd69a2a6
+    "@angular/common": ^16.0.0
+    "@angular/core": ^16.0.0
+  checksum: aeb19b8cb28b68f0094900be410810657e6c78b88a6954de9a7485878a18a8f812754bae449154909caf3f5bf9e717057fcccf0967ea61174d41148e69ba3431
   languageName: node
   linkType: hard
 
@@ -18477,13 +18478,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs-compat@npm:6.6.7":
-  version: 6.6.7
-  resolution: "rxjs-compat@npm:6.6.7"
-  checksum: a47339680d8da5ad8d00693ff75653deff99206ca9a12fc21c48d5dc88b972d0aed2dbcdf34b8f7ae52fe8817931f70a0e25a053ea75eb24802f2daf6c8a47b7
-  languageName: node
-  linkType: hard
-
 "rxjs-report-usage@npm:^1.0.4":
   version: 1.0.6
   resolution: "rxjs-report-usage@npm:1.0.6"
@@ -20011,13 +20005,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinycolor2@npm:^1.0.0":
-  version: 1.6.0
-  resolution: "tinycolor2@npm:1.6.0"
-  checksum: 6df4d07fceeedc0a878d7bac47e2cd47c1ceeb1078340a9eb8a295bc0651e17c750f73d47b3028d829f30b85c15e0572c0fd4142083e4c21a30a597e47f47230
-  languageName: node
-  linkType: hard
-
 "tinyglobby@npm:^0.2.12":
   version: 0.2.13
   resolution: "tinyglobby@npm:0.2.13"
@@ -20025,16 +20012,6 @@ __metadata:
     fdir: ^6.4.4
     picomatch: ^4.0.2
   checksum: 3a2e87a2518cb3616057b0aa58be4f17771ae78c6890556516ae1e631f8ce4cfee1ba1dcb62fcc54a64e2bdd6c3104f4f3d021e1a3e3f8fb0875bca380b913e5
-  languageName: node
-  linkType: hard
-
-"tinygradient@npm:^1.0.0":
-  version: 1.1.5
-  resolution: "tinygradient@npm:1.1.5"
-  dependencies:
-    "@types/tinycolor2": ^1.4.0
-    tinycolor2: ^1.0.0
-  checksum: d41771d553fff884830f60029ba32163066221f1c6ea28ddf9751b10d54015fa47597bdefa164e20434ba3018e499dbd17b465fd43a095c587cac28bb7de5a0e
   languageName: node
   linkType: hard
 
@@ -20342,7 +20319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1, tslib@npm:^2.3.1, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
+"tslib@npm:2.8.1, tslib@npm:^2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a

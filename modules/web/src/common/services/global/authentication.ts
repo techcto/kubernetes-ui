@@ -17,7 +17,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {IConfig} from '@api/root.ui';
 import {CookieService} from 'ngx-cookie-service';
-import {Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {AuthResponse, CsrfToken, LoginSpec, User} from 'typings/root.api';
 import {CONFIG_DI_TOKEN} from '../../../index.config';
@@ -64,6 +64,16 @@ export class AuthService {
           return this._meService.refresh();
         })
       );
+  }
+
+  /**
+   * Completes an SSO login: the session token was already issued by
+   * modules/auth's OIDC callback (see pkg/routes/oidc), so unlike login()
+   * there's no /api/v1/login round trip - just store it and refresh state.
+   */
+  completeSsoLogin(token: string): Observable<User> {
+    this.setTokenCookie_(token);
+    return from(this._meService.refresh());
   }
 
   logout(): void {

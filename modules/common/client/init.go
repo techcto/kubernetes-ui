@@ -37,11 +37,12 @@ var (
 type Option func(*configBuilder)
 
 type configBuilder struct {
-	userAgent      string
-	kubeconfigPath string
-	masterUrl      string
-	insecure       bool
-	caBundlePath   string
+	userAgent         string
+	kubeconfigPath    string
+	masterUrl         string
+	insecure          bool
+	caBundlePath      string
+	sessionSigningKey string
 }
 
 func (in *configBuilder) buildBaseConfig() (config *rest.Config, err error) {
@@ -136,7 +137,33 @@ func WithCaBundle(caBundlePath string) Option {
 	}
 }
 
+func WithSessionSigningKey(key string) Option {
+	return func(c *configBuilder) {
+		c.sessionSigningKey = key
+	}
+}
+
 func configFromRequest(request *http.Request) (*rest.Config, error) {
+	if !HasAuthorizationHeader(request) {
+		return nil, errors.NewUnauthorized(errors.MsgLoginUnauthorizedError)
+	}
+
+	// An SSO session token (see modules/auth/pkg/routes/oidc) authenticates
+	// as this pod's own ServiceAccount (baseConfig's in-cluster credentials,
+	// which - unlike copying BearerToken by hand - keeps automatic rotation
+	// of the projected token working) while impersonating the OIDC-login'd
+	// user for RBAC purposes, since EKS's control plane has no way to trust
+	// Keycloak directly. Falls through to the existing raw-bearer-token
+	// behavior for anything that isn't one of our own session tokens.
+	if session, ok := tryParseSession(GetBearerToken(request)); ok {
+		config := rest.CopyConfig(baseConfig)
+		config.Impersonate = rest.ImpersonationConfig{
+			UserName: session.Username,
+			Groups:   []string{session.Role},
+		}
+		return config, nil
+	}
+
 	authInfo, err := buildAuthInfo(request)
 	if err != nil {
 		return nil, err
@@ -221,6 +248,7 @@ func Init(options ...Option) {
 	}
 
 	baseConfig = config
+	setSessionSigningKey(builder.sessionSigningKey)
 }
 
 func isInitialized() bool {
