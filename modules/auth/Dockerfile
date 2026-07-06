@@ -17,6 +17,8 @@ FROM alpine:3.21 AS user
 ENV USER=nonroot
 ENV UID=10001
 
+RUN apk add --no-cache ca-certificates
+
 # Create nonroot user.
 RUN adduser \
     --disabled-password \
@@ -69,6 +71,7 @@ COPY --from=builder /workspace/auth/dashboard-auth /dashboard-auth
 # Import the user and group files from the builder.
 COPY --from=user /etc/passwd /etc/passwd
 COPY --from=user /etc/group /etc/group
+COPY --from=user /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 USER nonroot:nonroot
 
