@@ -143,6 +143,10 @@ app:
 
 auth:
   role: auth
+  serviceAccount:
+    create: true
+    name: ""
+    annotations: {}
   image:
     repository: docker.io/kubernetesui/dashboard-auth
     tag: 1.4.0

@@ -32,17 +32,19 @@ var (
 	argKubeconfig             = pflag.String("kubeconfig", "", "path to kubeconfig file")
 	argApiServerHost          = pflag.String("apiserver-host", "", "address of the Kubernetes API server to connect to in the format of protocol://address:port, leave it empty if the binary runs inside cluster for local discovery attempt")
 	argApiServerSkipTLSVerify = pflag.Bool("apiserver-skip-tls-verify", false, "enable if connection with remote Kubernetes API server should skip TLS verify")
-	argApiServerCaBundle				 = pflag.String("apiserver-ca-bundle", "", "file containing the x509 certificates used for HTTPS connection to the API Server")
+	argApiServerCaBundle      = pflag.String("apiserver-ca-bundle", "", "file containing the x509 certificates used for HTTPS connection to the API Server")
 
 	// OIDC (Keycloak) SSO login - see pkg/routes/oidc. Distinct from the
 	// apiserver-* flags above, which are about reaching the K8s API, not
 	// authenticating an end user via an external identity provider.
-	argOIDCIssuerURL    = pflag.String("oidc-issuer-url", "", "Cloud's Keycloak realm issuer URL, e.g. https://keycloak.example.com/realms/cloud")
-	argOIDCClientID     = pflag.String("oidc-client-id", "", "Keycloak client id registered for this cluster")
-	argOIDCClientSecret = pflag.String("oidc-client-secret", "", "Keycloak client secret registered for this cluster")
-	argOIDCRedirectURL  = pflag.String("oidc-redirect-url", "", "callback URL registered with Keycloak, e.g. https://dashboard.example.com/api/v1/oidc/callback")
-	argOIDCScopes       = pflag.String("oidc-scopes", "openid profile email", "space-separated OIDC scopes to request")
-	argSessionSigningKey = pflag.String("session-signing-key", "", "key used to sign the session token issued after a successful OIDC login")
+	argOIDCIssuerURL               = pflag.String("oidc-issuer-url", "", "Cloud's Keycloak realm issuer URL, e.g. https://keycloak.example.com/realms/cloud")
+	argOIDCClientID                = pflag.String("oidc-client-id", "", "Keycloak client id registered for this cluster")
+	argOIDCClientSecret            = pflag.String("oidc-client-secret", "", "Keycloak client secret registered for this cluster")
+	argOIDCRedirectURL             = pflag.String("oidc-redirect-url", "", "callback URL registered with Keycloak, e.g. https://dashboard.example.com/api/v1/oidc/callback")
+	argOIDCScopes                  = pflag.String("oidc-scopes", "openid profile email", "space-separated OIDC scopes to request")
+	argSessionSigningKey           = pflag.String("session-signing-key", "", "key used to sign the session token issued after a successful OIDC login")
+	argMarketplaceProductCode      = pflag.String("marketplace-product-code", "", "AWS Marketplace product code; when set, RegisterUsage must succeed before login is enabled")
+	argMarketplacePublicKeyVersion = pflag.Int32("marketplace-public-key-version", 1, "AWS Marketplace public key version used by RegisterUsage")
 )
 
 func init() {
@@ -105,4 +107,12 @@ func OIDCEnabled() bool {
 
 func SessionSigningKey() string {
 	return *argSessionSigningKey
+}
+
+func MarketplaceProductCode() string {
+	return *argMarketplaceProductCode
+}
+
+func MarketplacePublicKeyVersion() int32 {
+	return *argMarketplacePublicKeyVersion
 }

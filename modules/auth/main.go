@@ -15,12 +15,15 @@
 package main
 
 import (
+	"context"
 	"os"
+	"time"
 
 	"k8s.io/klog/v2"
 
 	"k8s.io/dashboard/auth/pkg/args"
 	"k8s.io/dashboard/auth/pkg/environment"
+	"k8s.io/dashboard/auth/pkg/marketplace"
 	"k8s.io/dashboard/auth/pkg/router"
 	"k8s.io/dashboard/client"
 
@@ -33,6 +36,13 @@ import (
 
 func main() {
 	klog.InfoS("Starting Kubernetes Dashboard Auth", "version", environment.Version)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	defer cancel()
+	if err := marketplace.Register(ctx, args.MarketplaceProductCode(), args.MarketplacePublicKeyVersion()); err != nil {
+		klog.ErrorS(err, "AWS Marketplace entitlement check failed")
+		os.Exit(1)
+	}
 
 	client.Init(
 		client.WithUserAgent(environment.UserAgent()),
