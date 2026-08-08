@@ -2,12 +2,12 @@
 This guide is for anyone interested in contributing design work themselves or contributing in a way that is impacted by design.
 
 ## Resources:
-* Follow the [Getting started guide](https://github.com/kubernetes/dashboard/wiki/Getting-started) to get the most recent version of Dashboard up and running.
+* Follow the [Getting started guide](https://github.com/techcto/kubernetes-ui/wiki/Getting-started) to get the most recent version of Dashboard up and running.
 * Dashboard is based on Google’s [Material](https://material.io/guidelines/) design system. Refer to their spec for guidance. 
 
 ## Process:
 1. **Have an idea for a new feature** 💡
-2. **Create a _New Issue_ in the [Dashboard repo](https://github.com/kubernetes/dashboard)** ✍️
+2. **Create a _New Issue_ in the [Dashboard repo](https://github.com/techcto/kubernetes-ui)** ✍️
       * If available, this should include…
         * The why of the new feature (required).
         * Use case(s).

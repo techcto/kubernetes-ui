@@ -42,8 +42,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/kubernetes/dashboard-metrics-scraper
-            docker.io/kubernetesui/dashboard-metrics-scraper
+            ghcr.io/techcto/kubernetes-ui-metrics-scraper
           tags: |
             type=raw,value=latest
             type=match,pattern=\d+\.\d+\.\d+
@@ -52,10 +51,6 @@ jobs:
       - uses: docker/setup-buildx-action@v3.11.1
         with:
           config: .github/buildkitd.toml
-      - uses: docker/login-action@v3.5.0
-        with:
-          username: ${{ secrets.DOCKER_RELEASE_USER }}
-          password: ${{ secrets.DOCKER_RELEASE_PASS }}
       - uses: docker/login-action@v3.5.0
         with:
           registry: ghcr.io
@@ -83,5 +78,5 @@ jobs:
             ### Image
 
             ```
-            docker.io/kubernetesui/dashboard-metrics-scraper:${{ steps.meta.outputs.version }}
+            ghcr.io/techcto/kubernetes-ui-metrics-scraper:${{ steps.meta.outputs.version }}
             ```

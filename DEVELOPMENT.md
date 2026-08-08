@@ -15,7 +15,7 @@ The Kubernetes Dashboard consists of a few main modules:
 
 ## Code Conventions
 
-When writing new Go code, we try to follow conventions described in [Effective Go](https://golang.org/doc/effective_go.html).  We are using [Go Report Card](https://goreportcard.com/report/github.com/kubernetes/dashboard) to monitor how well we are doing.
+When writing new Go code, we try to follow conventions described in [Effective Go](https://golang.org/doc/effective_go.html).  We are using [Go Report Card](https://goreportcard.com/report/github.com/techcto/kubernetes-ui) to monitor how well we are doing.
 
 For Angular, we try to follow conventions described in [Angular Style Guide](https://angular.io/guide/styleguide) and [Material Design Guidelines](https://material.io/guidelines/).
 

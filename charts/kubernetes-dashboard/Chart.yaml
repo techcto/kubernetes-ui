@@ -19,14 +19,12 @@ description: General-purpose web UI for Kubernetes clusters
 keywords:
   - kubernetes
   - dashboard
-home: https://github.com/kubernetes/dashboard
+home: https://github.com/techcto/kubernetes-ui
 sources:
-  - https://github.com/kubernetes/dashboard
+  - https://github.com/techcto/kubernetes-ui
 maintainers:
-  - name: desaintmartin
-    email: cdesaintmartin@wiremind.fr
-  - name: floreks
-    email: s.florek91@gmail.com
+  - name: SpaceMade
+    url: https://github.com/techcto
 icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
 kubeVersion: ">=1.21.0-0"
 dependencies:

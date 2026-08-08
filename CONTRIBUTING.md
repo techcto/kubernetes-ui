@@ -1,39 +1,18 @@
-# Contributing Guidelines
+# Contributing to SpaceMade Kubernetes UI
 
-Welcome to Kubernetes. We are excited about the prospect of you joining our [community](https://github.com/kubernetes/community)! The Kubernetes community abides by the CNCF [code of conduct](code-of-conduct.md). Here is an excerpt:
+Development and review happen in
+[`techcto/kubernetes-ui`](https://github.com/techcto/kubernetes-ui).
 
-_As contributors and maintainers of this project, and in the interest of fostering an open and welcoming community, we pledge to respect all people who contribute through reporting issues, posting feature requests, updating documentation, submitting pull requests or patches, and other activities._
+1. Open an issue describing the bug or proposed change.
+2. Fork this repository and create a focused branch.
+3. Add or update tests with the implementation.
+4. Run the relevant Go, web, and Helm checks documented in
+   [DEVELOPMENT.md](DEVELOPMENT.md).
+5. Open a pull request against this repository's `master` branch.
 
-## Getting Started
+All submissions require review and must follow the project
+[Code of Conduct](code-of-conduct.md). By contributing, you agree that your
+contribution is licensed under the repository's Apache License 2.0.
 
-To learn more about the project, please read through the following documents:
-
-- https://github.com/kubernetes/dashboard/tree/master/docs
-- https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
-
-All the contributions are done via GitHub.
-More documentation on contributing can be found here:
-
-- [Contributor License Agreement](https://git.k8s.io/community/CLA.md) Kubernetes projects require that you sign a Contributor License Agreement (CLA) before we can accept your pull requests
-- [Kubernetes Contributor Guide](http://git.k8s.io/community/contributors/guide) - Main contributor documentation, or you can just jump directly to the [contributing section](https://git.k8s.io/community/contributors/guide#contributing)
-- [Contributor Cheat Sheet](https://git.k8s.io/community/contributors/guide/contributor-cheatsheet/README.md) - Common resources for existing developers
-
-### Create a patch
-
-1. Submit an issue by describing your proposed change to the repo in question.
-2. The repo owners will respond to your issue rapidly.
-3. Fork the repo make your changes and test it.
-4. Submit a pull request.
-
-### Get through review process
-
-All submissions, including submissions by project members, require review. We use GitHub pull requests for this purpose.
-
-## Mentorship
-
-- [Mentoring Initiatives](https://git.k8s.io/community/mentoring) - We have a diverse set of mentorship programs available that are always looking for volunteers!
-
-## Contact Information
-
-- [Slack channel](https://kubernetes.slack.com/messages/sig-ui)
-- [Mailing list](https://groups.google.com/forum/#!forum/kubernetes-sig-ui)
+Use [GitHub Issues](https://github.com/techcto/kubernetes-ui/issues) for project
+questions, bug reports, and feature proposals.

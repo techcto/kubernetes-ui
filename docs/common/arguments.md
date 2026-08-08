@@ -82,4 +82,4 @@ Dashboard containers accept multiple arguments that can be used to customize the
 | v                          | 1                             | Number for the log level verbosity (default 1)                                                                                                                            |                                                                                                                                                                                                                                                                                                |
 
 ----
-_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
+_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/techcto/kubernetes-ui/graphs/contributors)_

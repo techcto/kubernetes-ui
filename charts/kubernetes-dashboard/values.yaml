@@ -148,7 +148,7 @@ auth:
     name: ""
     annotations: {}
   image:
-    repository: docker.io/kubernetesui/dashboard-auth
+    repository: ghcr.io/techcto/kubernetes-ui-auth
     tag: 1.4.0
   scaling:
     replicas: 1
@@ -190,7 +190,7 @@ auth:
 api:
   role: api
   image:
-    repository: docker.io/kubernetesui/dashboard-api
+    repository: ghcr.io/techcto/kubernetes-ui-api
     tag: 1.14.0
   scaling:
     replicas: 1
@@ -204,7 +204,7 @@ api:
         containerPort: 8000
         protocol: TCP
     # Additional container arguments
-    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
+    # Full list of arguments: https://github.com/techcto/kubernetes-ui/blob/master/docs/common/arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
     args: []
@@ -250,7 +250,7 @@ api:
 web:
   role: web
   image:
-    repository: docker.io/kubernetesui/dashboard-web
+    repository: ghcr.io/techcto/kubernetes-ui-web
     tag: 1.7.0
   scaling:
     replicas: 1
@@ -264,7 +264,7 @@ web:
         containerPort: 8000
         protocol: TCP
     # Additional container arguments
-    # Full list of arguments: https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
+    # Full list of arguments: https://github.com/techcto/kubernetes-ui/blob/master/docs/common/arguments.md
     # args:
     # - --system-banner="Welcome to the Kubernetes Dashboard"
     args: []
@@ -308,12 +308,12 @@ web:
 
 ### Metrics Scraper
 ### Container to scrape, store, and retrieve a window of time from the Metrics Server.
-### refs: https://github.com/kubernetes/dashboard/tree/master/modules/metrics-scraper
+### refs: https://github.com/techcto/kubernetes-ui/tree/master/modules/metrics-scraper
 metricsScraper:
   enabled: true
   role: metrics-scraper
   image:
-    repository: docker.io/kubernetesui/dashboard-metrics-scraper
+    repository: ghcr.io/techcto/kubernetes-ui-metrics-scraper
     tag: 1.2.2
   scaling:
     replicas: 1

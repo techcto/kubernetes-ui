@@ -12,4 +12,4 @@ For the sparklines and graphs to be shown in Dashboard you need to have [metrics
 The easiest way to check if `metrics-server` is installed and working properly is to run `kubectl top pod` or `kubectl top node`.
 
 ----
-_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
+_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/techcto/kubernetes-ui/graphs/contributors)_

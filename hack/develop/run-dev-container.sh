@@ -53,7 +53,7 @@ KD_DEV_SIDECAR_HOST=${KD_DEV_SIDECAR_HOST:-"http://localhost:8000"}
 KD_DEV_IMAGE_NAME=${KD_DEV_CONTAINER_NAME:-"k8s-dashboard-dev-image"}
 KD_DEV_SRC=${KD_DEV_SRC:-"${CD}"}
 KD_DEV_CONTAINER_NAME=${KD_DEV_CONTAINER_NAME:-"k8s-dashboard-dev"}
-KD_DEV_SRC_ON_CONTAINER=/go/src/github.com/kubernetes/dashboard
+KD_DEV_SRC_ON_CONTAINER=/go/src/github.com/techcto/kubernetes-ui
 
 echo "Remove existing container ${KD_DEV_CONTAINER_NAME}"
 docker rm -f ${KD_DEV_CONTAINER_NAME}

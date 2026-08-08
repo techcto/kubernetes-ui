@@ -23,4 +23,4 @@ Impersonation will only work when the reverse proxy provides the `Authorization`
 
 
 ----
-_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
+_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/techcto/kubernetes-ui/graphs/contributors)_

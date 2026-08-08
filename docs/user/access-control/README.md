@@ -61,4 +61,4 @@ Recommended lecture to find out how to create Service Account and grant it privi
 To create sample user and to get its token, see [Creating sample user](./creating-sample-user.md) guide.
 
 ----
-_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/kubernetes/dashboard/graphs/contributors)_
+_Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/techcto/kubernetes-ui/graphs/contributors)_

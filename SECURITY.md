@@ -1,22 +1,18 @@
 # Security Policy
 
-## Security Announcements
+## Reporting a vulnerability
 
-Join the [kubernetes-security-announce] group for security and vulnerability announcements.
+Do not disclose suspected vulnerabilities in a public issue. Use GitHub's
+private vulnerability reporting for
+[`techcto/kubernetes-ui`](https://github.com/techcto/kubernetes-ui/security/advisories/new).
 
-You can also subscribe to an RSS feed of the above using [this link][kubernetes-security-announce-rss].
+Include the affected version, deployment configuration, reproduction steps,
+impact, and any suggested mitigation. SpaceMade maintainers will acknowledge
+the report, investigate it, and coordinate a fix and disclosure.
 
-## Reporting a Vulnerability
+## Supported versions
 
-Instructions for reporting a vulnerability can be found on the
-[Kubernetes Security and Disclosure Information] page.
-
-## Supported Versions
-
-Information about supported Kubernetes versions can be found on the
-[Kubernetes version and version skew support policy] page on the Kubernetes website.
-
-[kubernetes-security-announce]: https://groups.google.com/forum/#!forum/kubernetes-security-announce
-[kubernetes-security-announce-rss]: https://groups.google.com/forum/feed/kubernetes-security-announce/msgs/rss_v2_0.xml?num=50
-[Kubernetes version and version skew support policy]: https://kubernetes.io/docs/setup/release/version-skew-policy/#supported-versions
-[Kubernetes Security and Disclosure Information]: https://kubernetes.io/docs/reference/issues-security/security/#report-a-vulnerability
+Security fixes target the latest released version. Customers using the AWS
+Marketplace product should update to the latest published container version.
+Kubernetes compatibility follows the `kubeVersion` declared in the maintained
+Helm chart.

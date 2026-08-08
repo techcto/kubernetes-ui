@@ -115,13 +115,13 @@ ENV NODE_OPTIONS=--max-old-space-size=8192
 RUN chmod 777 -R /go
 
 # Volume for source code
-VOLUME ["/go/src/github.com/kubernetes/dashboard"]
+VOLUME ["/go/src/github.com/techcto/kubernetes-ui"]
 
 # Mount point for kubeconfig
 RUN mkdir -p /home/user/.kube
 
 # Current directory is always dashboard source directory.
-WORKDIR /go/src/github.com/kubernetes/dashboard
+WORKDIR /go/src/github.com/techcto/kubernetes-ui
 
 # Run gosu command in container.
 CMD ./hack/develop/gosu-command.sh

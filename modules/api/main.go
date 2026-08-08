@@ -163,7 +163,7 @@ func handleFatalInitError(err error) {
 		"invalid apiserver certificates or service account's configuration) or the "+
 		"--apiserver-host param points to a server that does not exist. Reason: %s\n"+
 		"Refer to our FAQ and wiki pages for more information: "+
-		"https://github.com/kubernetes/dashboard/wiki/FAQ", err)
+		"https://github.com/techcto/kubernetes-ui/wiki/FAQ", err)
 }
 
 /**

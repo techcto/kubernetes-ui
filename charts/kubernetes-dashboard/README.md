@@ -1,22 +1,21 @@
-# Kubernetes Dashboard
+# SpaceMade Kubernetes UI Helm Chart
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/dashboard)](https://goreportcard.com/report/github.com/kubernetes/dashboard)
-[![Coverage Status](https://codecov.io/github/kubernetes/dashboard/coverage.svg?branch=master)](https://codecov.io/github/kubernetes/dashboard?branch=master)
-[![GitHub release](https://img.shields.io/github/release/kubernetes/dashboard.svg)](https://github.com/kubernetes/dashboard/releases/latest)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kubernetes/dashboard/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/techcto/kubernetes-ui)](https://goreportcard.com/report/github.com/techcto/kubernetes-ui)
+[![GitHub release](https://img.shields.io/github/v/release/techcto/kubernetes-ui)](https://github.com/techcto/kubernetes-ui/releases/latest)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/techcto/kubernetes-ui/blob/master/LICENSE)
 
 ## TL;DR
 
 ```console
-# Add kubernetes-dashboard repository
-helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+# Add the SpaceMade repository
+helm repo add spacemade-kubernetes-ui https://techcto.github.io/kubernetes-ui/
 # Deploy a Helm Release named "kubernetes-dashboard" using the kubernetes-dashboard chart
-helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+helm upgrade --install kubernetes-dashboard spacemade-kubernetes-ui/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
 
 # Introduction
 
-This chart bootstraps a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) deployment on
+This chart bootstraps a [Kubernetes Dashboard](https://github.com/techcto/kubernetes-ui) deployment on
 a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Installing the Chart
@@ -25,8 +24,8 @@ To install the [Chart](https://helm.sh/docs/intro/using_helm/#three-big-concepts
 the [Release](https://helm.sh/docs/intro/using_helm/#three-big-concepts) name `kubernetes-dashboard`:
 
 ```console
-helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+helm repo add spacemade-kubernetes-ui https://techcto.github.io/kubernetes-ui/
+helm upgrade --install kubernetes-dashboard spacemade-kubernetes-ui/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 ```
 
 The command deploys kubernetes-dashboard on the Kubernetes cluster in the `kubernetes-dashboard` namespace with default
@@ -46,7 +45,7 @@ The command removes all the Kubernetes components associated with the chart and 
 ## Access control
 
 It is critical for the Kubernetes cluster to correctly setup access control of Kubernetes Dashboard.
-See this [guide](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/README.md) for details.
+See this [guide](https://github.com/techcto/kubernetes-ui/blob/master/docs/user/access-control/README.md) for details.
 
 It is highly recommended to use RBAC with minimal privileges needed for Dashboard to run.
 
@@ -61,13 +60,13 @@ If ingress is disabled you must use direct port-forwarding to access this applic
 ## Configuration
 
 Please refer
-to [values.yaml](https://github.com/kubernetes/dashboard/blob/master/charts/kubernetes-dashboard/values.yaml)
+to [values.yaml](https://github.com/techcto/kubernetes-ui/blob/master/charts/kubernetes-dashboard/values.yaml)
 for valid values and their defaults.
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install/upgrade`. For example,
 
 ```console
-helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboard \
+helm install spacemade-kubernetes-ui/kubernetes-dashboard --name kubernetes-dashboard \
   --set=api.containers.resources.limits.cpu=200m
 ```
 
@@ -75,7 +74,7 @@ Alternatively, a YAML file that specifies the values for the above parameters ca
 chart. For example,
 
 ```console
-helm install kubernetes-dashboard/kubernetes-dashboard --name kubernetes-dashboard -f values.yaml
+helm install spacemade-kubernetes-ui/kubernetes-dashboard --name kubernetes-dashboard -f values.yaml
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml), which is used by default, as reference
@@ -159,4 +158,4 @@ To do that you can follow the [guide](https://helm.sh/blog/migrate-from-helm-v2-
 ## Access
 
 For information about how to access, please read
-the [kubernetes-dashboard manual](https://github.com/kubernetes/dashboard)
+the [kubernetes-dashboard manual](https://github.com/techcto/kubernetes-ui)
