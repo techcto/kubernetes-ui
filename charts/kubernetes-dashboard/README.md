@@ -100,9 +100,9 @@ incompatible breaking change needing manual actions.
 ### Update from 7.x.x-alphaX to 7.x.x
 
 Due to further architecture changes do a clean installation of Kubernetes Dashboard when upgrading from alpha chart version.
-Default dependency on both `ingress-nginx-controller` and `cert-manager` have been removed in favor of using a single-container, DBless
-`kong` installation as a gateway that connects all our containers and exposes the UI. Users can then use any ingress controller or proxy
-in front of kong gateway.
+The SpaceMade web service now serves the UI and proxies authentication and API
+traffic internally. No separate API gateway is required. Users can place any
+supported ingress controller or load balancer in front of the web service.
 
 ### Upgrade from 6.x.x to 7.x.x
 

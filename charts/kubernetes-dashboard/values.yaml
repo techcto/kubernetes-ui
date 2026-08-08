@@ -382,26 +382,6 @@ metrics-server:
     - --kubelet-preferred-address-types=InternalIP
     - --kubelet-insecure-tls
 
-## Required Kong sub-chart with DBless configuration to act as a gateway
-## for our all containers.
-kong:
-  enabled: true
-  ## Configuration reference: https://docs.konghq.com/gateway/3.6.x/reference/configuration
-  env:
-    dns_order: LAST,A,CNAME,AAAA,SRV
-    plugins: 'off'
-    nginx_worker_processes: 1
-  ingressController:
-    enabled: false
-  manager:
-    enabled: false
-  dblessConfig:
-    configMap: kong-dbless-config
-  proxy:
-    type: ClusterIP
-    http:
-      enabled: false
-
 ## Optional Cert Manager sub-chart configuration
 ## Enable this if you don't already have cert-manager enabled on your cluster.
 cert-manager:

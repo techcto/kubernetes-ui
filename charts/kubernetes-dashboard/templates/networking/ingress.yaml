@@ -16,11 +16,6 @@
 {{- include "kubernetes-dashboard.validate.ingressIssuerScope" $ }}
 
 
-# Determine the service port to use for the ingress configuration
-# If TLS is enabled in the ingress configuration, use the TLS service port.
-# Otherwise, fall back to the HTTP service port.
-{{- $servicePort := (ternary $.Values.kong.proxy.tls.servicePort $.Values.kong.proxy.http.servicePort $.Values.app.ingress.tls.enabled) }}
-
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -38,8 +33,7 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.app.ingress.issuer.name }}
     {{- end }}
     {{- if .Values.app.ingress.useDefaultAnnotations }}
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     {{- end }}
     {{- if not (eq .Values.app.ingress.path "/") }}
@@ -77,9 +71,9 @@ spec:
             pathType: {{ $.Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
+                name: {{ template "kubernetes-dashboard.fullname" $ }}-{{ $.Values.web.role }}
                 port:
-                  number: {{ $servicePort }}
+                  number: 8000
     {{- end }}
     {{- else }}
     - http:
@@ -88,8 +82,8 @@ spec:
             pathType: {{ .Values.app.ingress.pathType }}
             backend:
               service:
-                name: {{ template "kong.fullname" (index $.Subcharts "kong") }}-proxy
+                name: {{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.web.role }}
                 port:
-                  number: {{ $servicePort }}
+                  number: 8000
     {{- end }}
 {{- end }}

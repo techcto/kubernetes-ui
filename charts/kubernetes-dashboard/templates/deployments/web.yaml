@@ -65,6 +65,10 @@ spec:
           {{- end }}
 
           env:
+            - name: KUBERNETES_DASHBOARD_AUTH_URL
+              value: http://{{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.auth.role }}:8000
+            - name: KUBERNETES_DASHBOARD_API_URL
+              value: http://{{ template "kubernetes-dashboard.fullname" . }}-{{ .Values.api.role }}:8000
             {{- if .Values.web.containers.resources.limits.cpu }}
             - name: GOMAXPROCS
               valueFrom:

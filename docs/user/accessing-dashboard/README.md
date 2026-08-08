@@ -12,12 +12,12 @@ If you have modified the default configuration in any way, it might not work.
 
 Use `kubectl port-forward` and access Dashboard with a simple URL. Depending on the chosen installation method you might need to access different service.
 
-For Helm-based installation when `kong` is being installed by our Helm chart simply run:
+For a Helm-based installation, forward the SpaceMade web service:
 ```shell
-kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
+kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-web 8443:8000
 ```
 
-Now access Dashboard at: [https://localhost:8443](https://localhost:8443).
+Now access Dashboard at: [http://localhost:8443](http://localhost:8443).
 
 ## `kubectl proxy`
 
@@ -27,7 +27,7 @@ Use `kubectl proxy` and access Dashboard with a simple URL.
 kubectl proxy --port=8001
 ```
 
-Now access Dashboard at: [http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard-kong-proxy:443/proxy/](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard-kong-proxy:443/proxy/)
+Now access Dashboard at: [http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard-web:8000/proxy/](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard-web:8000/proxy/)
 
 ----
 _Copyright 2019 [The Kubernetes Dashboard Authors](https://github.com/techcto/kubernetes-ui/graphs/contributors)_

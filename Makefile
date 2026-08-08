@@ -84,16 +84,14 @@ serve: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts developmen
 		--build \
 		--force-recreate \
 		--remove-orphans \
-		--no-attach gateway \
 		--no-attach scraper \
 		--no-attach metrics-server
 
 # Starts production version of the application.
 #
-# HTTPS: https://localhost:8443
 # HTTP: http://localhost:8080
 #
-# Note: Make sure that the ports 8443 (Gateway HTTPS) and 8080 (Gateway HTTP) are free on your localhost
+# Note: Make sure that port 8080 is free on your localhost
 .PHONY: run
 run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production version of the application on https://localhost:8443 and https://localhost:8000
 	@KUBECONFIG=$(KIND_CLUSTER_INTERNAL_KUBECONFIG_PATH) \
@@ -105,7 +103,6 @@ run: $(PRE) --ensure-kind-cluster --ensure-metrics-server ## Starts production v
 	docker compose -f $(DOCKER_COMPOSE_PATH) --project-name=$(PROJECT_NAME) up \
 		--build \
 		--remove-orphans \
-		--no-attach gateway \
 		--no-attach scraper \
 		--no-attach metrics-server
 
@@ -180,7 +177,6 @@ helm-release: --ensure-kind-cluster --ensure-kind-ingress-nginx --ensure-helm-de
 
 # To test API mode with helm below options can be used:
 #		--set app.mode=api \
-#		--set kong.enabled=false \
 #		--set api.containers.args={--metrics-provider=none} \
 
 .PHONY: helm-uninstall

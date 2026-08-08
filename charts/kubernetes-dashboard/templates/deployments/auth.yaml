@@ -55,9 +55,7 @@ spec:
         {{ toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- if .Values.auth.serviceAccount.create }}
       serviceAccountName: {{ default (printf "%s-%s" (include "kubernetes-dashboard.fullname" .) .Values.auth.role) .Values.auth.serviceAccount.name }}
-      {{- end }}
       containers:
         - name: {{ template "kubernetes-dashboard.name" . }}-{{ .Values.auth.role }}
           image: "{{ .Values.auth.image.repository }}:{{ .Values.auth.image.tag }}"

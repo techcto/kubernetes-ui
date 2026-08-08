@@ -21,7 +21,6 @@ on:
       - modules/metrics-scraper
       - modules/common
       - hack/docker
-      - hack/gateway
     tags:
       - "metrics-scraper/v*.*.*"
 permissions:

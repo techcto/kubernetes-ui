@@ -13,23 +13,6 @@
 # limitations under the License.
 
 services:
-  gateway:
-    container_name: kong-gateway
-    image: kong/kong-gateway:3.8
-    environment:
-      - "KONG_DATABASE=off"
-      - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
-      - "KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml"
-      - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
-      - "KONG_PROXY_ERROR_LOG=/dev/stderr"
-      - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
-      - "KONG_DNS_ORDER=LAST,A,CNAME"
-    volumes:
-      - ${PWD}/hack/gateway/prod.kong.yml:/kong/declarative/kong.yml
-    ports:
-      - "8080:8000"
-      - "8443:8443"
-
   auth:
     container_name: dashboard-auth
     build:
@@ -71,6 +54,11 @@ services:
       - "--kubeconfig=${KUBECONFIG:?}"
       - "--system-banner=${SYSTEM_BANNER:?}"
       - "--system-banner-severity=${SYSTEM_BANNER_SEVERITY:?}"
+    environment:
+      - KUBERNETES_DASHBOARD_AUTH_URL=http://auth:8000
+      - KUBERNETES_DASHBOARD_API_URL=http://api:8000
+    ports:
+      - "8080:8000"
     volumes:
       - ${KUBECONFIG:?}:${KUBECONFIG:?} # Required - tmp kubeconfig path resolves to $DASHBOARD_DIR/.tmp/kubeconfig
     tmpfs:

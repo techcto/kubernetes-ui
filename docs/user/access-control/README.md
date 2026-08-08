@@ -33,8 +33,8 @@ Kubernetes Dashboard supports two different ways of authenticating users:
 
 ### Login view
 
-In case you are using the latest installation then login functionality will be enabled by default and exposed via our
-gateway.
+In the current installation, login is enabled by default and exposed through
+the SpaceMade web service's built-in reverse proxy.
 
 ![Sing in](../../images/signin.png)
 

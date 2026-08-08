@@ -51,7 +51,7 @@ Common labels
 {{- define "kubernetes-dashboard.labels" -}}
 helm.sh/chart: {{ include "kubernetes-dashboard.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/managed-by: Helm
 app.kubernetes.io/part-of: {{ include "kubernetes-dashboard.name" . }}
 {{- with .Values.app.labels }}
 {{ toYaml . }}
@@ -88,12 +88,8 @@ Common annotations
 {{- end -}}
 
 {{- define "kubernetes-dashboard.app.csrf.secret.value" -}}
-{{- $secretName := (include "kubernetes-dashboard.app.csrf.secret.name" .) -}}
-{{- $secret := lookup "v1" "Secret" .Release.Namespace $secretName -}}
 {{- if .Values.app.security.csrfKey -}}
 private.key: {{ .Values.app.security.csrfKey | b64enc | quote }}
-{{- else if and $secret (hasKey $secret "data") (hasKey $secret.data "private.key") (index $secret.data "private.key") -}}
-private.key: {{ index $secret.data "private.key" }}
 {{- else -}}
 private.key: {{ randBytes 256 | b64enc | quote }}
 {{- end -}}

@@ -21,7 +21,6 @@ on:
       - modules/auth
       - modules/common
       - hack/docker
-      - hack/gateway
     tags:
       - "auth/v*.*.*"
 permissions:

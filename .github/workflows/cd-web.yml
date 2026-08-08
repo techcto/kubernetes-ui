@@ -21,7 +21,6 @@ on:
       - modules/web
       - modules/common
       - hack/docker
-      - hack/gateway
     tags:
       - "web/v*.*.*"
 permissions:
