@@ -1,5 +1,13 @@
 # SpaceMade Kubernetes UI
 
+```text
+ _  __     _                          _             _   _ ___
+| |/ /   _| |__   ___ _ __ _ __   ___| |_ ___  ___| | | |_ _|
+| ' / | | | '_ \ / _ \ '__| '_ \ / _ \ __/ _ \/ __| | | || |
+| . \ |_| | |_) |  __/ |  | | | |  __/ ||  __/\__ \ |_| || |
+|_|\_\__,_|_.__/ \___|_|  |_| |_|\___|\__\___||___/\___/|___|
+```
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/techcto/kubernetes-ui)](https://goreportcard.com/report/github.com/techcto/kubernetes-ui)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
