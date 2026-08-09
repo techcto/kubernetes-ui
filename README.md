@@ -3,15 +3,13 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/techcto/kubernetes-ui)](https://goreportcard.com/report/github.com/techcto/kubernetes-ui)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-SpaceMade Kubernetes UI is an actively maintained, web-based administration
-console for Kubernetes. SpaceMade owns and maintains this distribution at
-[`techcto/kubernetes-ui`](https://github.com/techcto/kubernetes-ui), including
-its release images, Helm chart, security fixes, SSO integration, and AWS
-Marketplace packaging.
+SpaceMade Kubernetes UI is an open-source, web-based administration console for
+Kubernetes. This repository provides its release images, Helm chart, security
+updates, SSO integration, and AWS Marketplace packaging.
 
 The project is based on the Apache-licensed Kubernetes Dashboard codebase and
-retains its original copyright and license notices. Development, releases,
-support, and roadmap decisions now happen in this repository.
+retains its original copyright and license notices. Contributions, issue
+reports, and feature requests are welcome in this repository.
 
 ## Features
 
