@@ -14,7 +14,7 @@
 
 ARG WEB_BUILDER_ARCH=amd64
 
-FROM alpine:3.21 AS user
+FROM --platform=$BUILDPLATFORM alpine:3.21 AS user
 
 ENV USER=nonroot
 ENV UID=10001
@@ -53,7 +53,7 @@ RUN SKIP_POSTINSTALL=true yarn workspaces focus
 # Build prod version of web app
 RUN make build-frontend
 
-FROM golang:1.24-alpine3.22 AS go-builder
+FROM --platform=$BUILDPLATFORM golang:1.24-alpine3.22 AS go-builder
 
 ARG TARGETARCH
 ARG TARGETOS

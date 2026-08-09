@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.21 AS user
+FROM --platform=$BUILDPLATFORM alpine:3.21 AS user
 
 ENV USER=nonroot
 ENV UID=10001
@@ -27,7 +27,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-FROM golang:1.24-alpine3.22 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.24-alpine3.22 AS builder
 
 ARG TARGETARCH
 ARG TARGETOS
