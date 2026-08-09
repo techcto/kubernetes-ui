@@ -1,4 +1,4 @@
-# SpaceMade Kubernetes UI
+# Kubernetes UI
 
 ```text
  _  __     _                          _             _   _ ___
@@ -11,7 +11,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/techcto/kubernetes-ui)](https://goreportcard.com/report/github.com/techcto/kubernetes-ui)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-SpaceMade Kubernetes UI is an open-source, web-based administration console for
+Kubernetes UI is an open-source, web-based administration console for
 Kubernetes. This repository provides its release images, Helm chart, security
 updates, SSO integration, and AWS Marketplace packaging.
 
@@ -31,10 +31,10 @@ reports, and feature requests are welcome in this repository.
 ## Install with Helm
 
 ```console
-helm repo add spacemade-kubernetes-ui https://techcto.github.io/kubernetes-ui/
+helm repo add kubernetes-ui https://techcto.github.io/kubernetes-ui/
 helm repo update
 helm upgrade --install kubernetes-dashboard \
-  spacemade-kubernetes-ui/kubernetes-dashboard \
+  kubernetes-ui/kubernetes-dashboard \
   --create-namespace \
   --namespace kubernetes-dashboard
 ```
