@@ -25,9 +25,10 @@ import (
 )
 
 const (
-	stateCookie    = "oidc_state"
-	verifierCookie = "oidc_verifier"
-	cookieMaxAge   = 300 // 5 minutes - just long enough for the Keycloak redirect round trip
+	stateCookie     = "oidc_state"
+	verifierCookie  = "oidc_verifier"
+	namespaceCookie = "oidc_namespace"
+	cookieMaxAge    = 300 // 5 minutes - just long enough for the Keycloak redirect round trip
 )
 
 func init() {
@@ -53,9 +54,19 @@ func handleLogin(c *gin.Context) {
 		return
 	}
 	verifier := generateVerifier()
+	namespace := c.Query("namespace")
+	if namespace != "" && !validNamespace(namespace) {
+		redirectToLogin(c, "invalid_namespace", "")
+		return
+	}
 
 	c.SetCookie(stateCookie, state, cookieMaxAge, "/api/v1/oidc", "", true, true)
 	c.SetCookie(verifierCookie, verifier, cookieMaxAge, "/api/v1/oidc", "", true, true)
+	if namespace != "" {
+		c.SetCookie(namespaceCookie, namespace, cookieMaxAge, "/api/v1/oidc", "", true, true)
+	} else {
+		c.SetCookie(namespaceCookie, "", -1, "/api/v1/oidc", "", true, true)
+	}
 
 	c.Redirect(http.StatusFound, loginRedirectURL(state, verifier))
 }
@@ -67,49 +78,59 @@ func handleLogin(c *gin.Context) {
 // query string - see modules/web/src/login/component.ts.
 func handleCallback(c *gin.Context) {
 	if !enabled() {
-		redirectToLogin(c, "sso_not_configured")
+		redirectToLogin(c, "sso_not_configured", "")
 		return
 	}
 
 	state, stateErr := c.Cookie(stateCookie)
 	verifier, verifierErr := c.Cookie(verifierCookie)
+	namespace, _ := c.Cookie(namespaceCookie)
 
-	// Clear both regardless of outcome - they're single-use.
+	// Clear all regardless of outcome - they're single-use.
 	c.SetCookie(stateCookie, "", -1, "/api/v1/oidc", "", true, true)
 	c.SetCookie(verifierCookie, "", -1, "/api/v1/oidc", "", true, true)
+	c.SetCookie(namespaceCookie, "", -1, "/api/v1/oidc", "", true, true)
 
 	if stateErr != nil || state == "" || state != c.Query("state") {
-		redirectToLogin(c, "invalid_state")
+		redirectToLogin(c, "invalid_state", namespace)
 		return
 	}
 	if verifierErr != nil || verifier == "" {
-		redirectToLogin(c, "invalid_state")
+		redirectToLogin(c, "invalid_state", namespace)
 		return
 	}
 
 	code := c.Query("code")
 	if code == "" {
-		redirectToLogin(c, "missing_code")
+		redirectToLogin(c, "missing_code", namespace)
 		return
 	}
 
 	username, groups, err := exchange(c.Request.Context(), code, verifier)
 	if err != nil {
 		klog.ErrorS(err, "OIDC callback failed")
-		redirectToLogin(c, "sso_failed")
+		redirectToLogin(c, "sso_failed", namespace)
 		return
 	}
 
 	session, err := issueSession(username, groups)
 	if err != nil {
 		klog.ErrorS(err, "Could not issue session")
-		redirectToLogin(c, "sso_failed")
+		redirectToLogin(c, "sso_failed", namespace)
 		return
 	}
 
-	c.Redirect(http.StatusFound, "/#/login?ssoToken="+url.QueryEscape(session))
+	redirectURL := "/#/login?ssoToken=" + url.QueryEscape(session)
+	if namespace != "" {
+		redirectURL += "&namespace=" + url.QueryEscape(namespace)
+	}
+	c.Redirect(http.StatusFound, redirectURL)
 }
 
-func redirectToLogin(c *gin.Context, reason string) {
-	c.Redirect(http.StatusFound, "/#/login?ssoError="+url.QueryEscape(reason))
+func redirectToLogin(c *gin.Context, reason, namespace string) {
+	redirectURL := "/#/login?ssoError=" + url.QueryEscape(reason)
+	if namespace != "" {
+		redirectURL += "&namespace=" + url.QueryEscape(namespace)
+	}
+	c.Redirect(http.StatusFound, redirectURL)
 }

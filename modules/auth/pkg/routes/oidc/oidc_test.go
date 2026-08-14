@@ -32,3 +32,16 @@ func TestKubernetesGroupsRejectsUnmanagedRoles(t *testing.T) {
 		t.Fatalf("kubernetesGroups() = %v, want no groups", got)
 	}
 }
+
+func TestNamespaceValidation(t *testing.T) {
+	for _, namespace := range []string{"techcto", "osirus-prod", "a"} {
+		if !validNamespace(namespace) {
+			t.Fatalf("namespacePattern rejected valid namespace %q", namespace)
+		}
+	}
+	for _, namespace := range []string{"default/../../", "TechCTO", "-invalid", "invalid-", "a234567890123456789012345678901234567890123456789012345678901234"} {
+		if validNamespace(namespace) {
+			t.Fatalf("namespacePattern accepted invalid namespace %q", namespace)
+		}
+	}
+}

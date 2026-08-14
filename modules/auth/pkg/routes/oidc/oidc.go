@@ -38,6 +38,11 @@ import (
 var kubernetesRolePriority = []string{"admin", "edit", "view"}
 
 var namespaceRolePattern = regexp.MustCompile(`^spacemade:namespace:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?:(?:admin|edit|view)$`)
+var namespacePattern = regexp.MustCompile(`^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$`)
+
+func validNamespace(namespace string) bool {
+	return len(namespace) <= 63 && namespacePattern.MatchString(namespace)
+}
 
 type provider struct {
 	oauth2Config *oauth2.Config
