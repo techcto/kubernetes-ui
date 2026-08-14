@@ -156,10 +156,14 @@ func configFromRequest(request *http.Request) (*rest.Config, error) {
 	// Keycloak directly. Falls through to the existing raw-bearer-token
 	// behavior for anything that isn't one of our own session tokens.
 	if session, ok := tryParseSession(GetBearerToken(request)); ok {
+		groups := session.Groups
+		if len(groups) == 0 && session.Role != "" {
+			groups = []string{session.Role}
+		}
 		config := rest.CopyConfig(baseConfig)
 		config.Impersonate = rest.ImpersonationConfig{
 			UserName: session.Username,
-			Groups:   []string{session.Role},
+			Groups:   groups,
 		}
 		return config, nil
 	}

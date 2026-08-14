@@ -32,8 +32,9 @@ const SessionIssuer = "k8s-dashboard-auth"
 // Keycloak ID token's preferred_username and resource_access claims.
 type SessionClaims struct {
 	jwt.RegisteredClaims
-	Username string `json:"username"`
-	Role     string `json:"role"`
+	Username string   `json:"username"`
+	Role     string   `json:"role"`
+	Groups   []string `json:"groups,omitempty"`
 }
 
 var sessionSigningKey []byte
@@ -48,8 +49,18 @@ func setSessionSigningKey(key string) {
 // SignSession mints a signed, short-lived session token for the given
 // identity. Used by modules/auth after a successful OIDC login.
 func SignSession(username, role string) (string, error) {
+	return SignSessionGroups(username, []string{role})
+}
+
+// SignSessionGroups preserves every Kubernetes RBAC group granted by the
+// trusted OIDC client. This is required for organization-scoped namespace
+// groups; reducing them to a single generic role can broaden or deny access.
+func SignSessionGroups(username string, groups []string) (string, error) {
 	if len(sessionSigningKey) == 0 {
 		return "", fmt.Errorf("session signing key not configured")
+	}
+	if len(groups) == 0 {
+		return "", fmt.Errorf("session has no Kubernetes groups")
 	}
 
 	claims := SessionClaims{
@@ -60,7 +71,8 @@ func SignSession(username, role string) (string, error) {
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
 		Username: username,
-		Role:     role,
+		Role:     groups[0],
+		Groups:   groups,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

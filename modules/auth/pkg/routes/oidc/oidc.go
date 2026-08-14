@@ -19,6 +19,8 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"regexp"
+	"sort"
 
 	gooidc "github.com/coreos/go-oidc/v3/oidc"
 	"golang.org/x/oauth2"
@@ -30,9 +32,12 @@ import (
 
 // kubernetesRolePriority mirrors Cloud's ClusterMember::getKubernetesRole()
 // mapping - Keycloak client role names match the K8s built-in ClusterRole
-// names 1:1 (view/edit/admin), so no translation table is needed beyond
-// picking the highest-privilege role when a user holds more than one.
+// names 1:1 (view/edit/admin) for legacy clusters. New clusters preserve
+// organization-scoped group names so Kubernetes RoleBindings can enforce the
+// namespace boundary, while owner remains a distinct cluster-wide group.
 var kubernetesRolePriority = []string{"admin", "edit", "view"}
+
+var namespaceRolePattern = regexp.MustCompile(`^spacemade:namespace:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?:(?:admin|edit|view)$`)
 
 type provider struct {
 	oauth2Config *oauth2.Config
@@ -97,48 +102,75 @@ func loginRedirectURL(state, verifier string) string {
 // edit/admin - see resource_access.<client_id>.roles in the ID token, set by
 // KeycloakService::createRolesForClient / ClusterMember::getKubernetesRole
 // on the cloud side).
-func exchange(ctx context.Context, code, verifier string) (username string, role string, err error) {
+func exchange(ctx context.Context, code, verifier string) (username string, groups []string, err error) {
 	token, err := current.oauth2Config.Exchange(ctx, code, oauth2.VerifierOption(verifier))
 	if err != nil {
-		return "", "", fmt.Errorf("code exchange failed: %w", err)
+		return "", nil, fmt.Errorf("code exchange failed: %w", err)
 	}
 
 	rawIDToken, ok := token.Extra("id_token").(string)
 	if !ok {
-		return "", "", fmt.Errorf("no id_token in token response")
+		return "", nil, fmt.Errorf("no id_token in token response")
 	}
 
 	idToken, err := current.verifier.Verify(ctx, rawIDToken)
 	if err != nil {
-		return "", "", fmt.Errorf("id_token verification failed: %w", err)
+		return "", nil, fmt.Errorf("id_token verification failed: %w", err)
 	}
 
 	var claims struct {
 		PreferredUsername string `json:"preferred_username"`
-		ResourceAccess     map[string]struct {
+		ResourceAccess    map[string]struct {
 			Roles []string `json:"roles"`
 		} `json:"resource_access"`
 	}
 	if err := idToken.Claims(&claims); err != nil {
-		return "", "", fmt.Errorf("could not parse id_token claims: %w", err)
+		return "", nil, fmt.Errorf("could not parse id_token claims: %w", err)
 	}
 
-	role = highestRole(claims.ResourceAccess[args.OIDCClientID()].Roles)
+	groups = kubernetesGroups(claims.ResourceAccess[args.OIDCClientID()].Roles)
+	if len(groups) == 0 {
+		return "", nil, fmt.Errorf("id_token has no authorized Kubernetes role")
+	}
 
-	return claims.PreferredUsername, role, nil
+	return claims.PreferredUsername, groups, nil
+}
+
+func kubernetesGroups(roles []string) []string {
+	has := make(map[string]bool, len(roles))
+	for _, role := range roles {
+		has[role] = true
+	}
+	if has["owner"] {
+		return []string{"owner"}
+	}
+
+	groups := make([]string, 0)
+	for role := range has {
+		if namespaceRolePattern.MatchString(role) {
+			groups = append(groups, role)
+		}
+	}
+	if len(groups) > 0 {
+		sort.Strings(groups)
+		return groups
+	}
+
+	for _, role := range kubernetesRolePriority {
+		if has[role] {
+			return []string{role}
+		}
+	}
+
+	return nil
 }
 
 func highestRole(roles []string) string {
-	has := make(map[string]bool, len(roles))
-	for _, r := range roles {
-		has[r] = true
+	groups := kubernetesGroups(roles)
+	if len(groups) > 0 {
+		return groups[0]
 	}
-	for _, r := range kubernetesRolePriority {
-		if has[r] {
-			return r
-		}
-	}
-	return "view"
+	return ""
 }
 
 // issueSession signs a short-lived session token carrying the user's
@@ -146,6 +178,6 @@ func highestRole(roles []string) string {
 // verifies in its own request pipeline (see k8s.io/dashboard/client's
 // SignSession/configFromRequest) - the frontend presents this as its own
 // Authorization bearer token on subsequent requests.
-func issueSession(username, role string) (string, error) {
-	return client.SignSession(username, role)
+func issueSession(username string, groups []string) (string, error) {
+	return client.SignSessionGroups(username, groups)
 }

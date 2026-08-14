@@ -93,14 +93,14 @@ func handleCallback(c *gin.Context) {
 		return
 	}
 
-	username, role, err := exchange(c.Request.Context(), code, verifier)
+	username, groups, err := exchange(c.Request.Context(), code, verifier)
 	if err != nil {
 		klog.ErrorS(err, "OIDC callback failed")
 		redirectToLogin(c, "sso_failed")
 		return
 	}
 
-	session, err := issueSession(username, role)
+	session, err := issueSession(username, groups)
 	if err != nil {
 		klog.ErrorS(err, "Could not issue session")
 		redirectToLogin(c, "sso_failed")
